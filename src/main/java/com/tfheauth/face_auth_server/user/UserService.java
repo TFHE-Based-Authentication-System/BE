@@ -36,4 +36,17 @@ public class UserService {
             throw new RuntimeException("이메일 또는 비밀번호가 잘못되었습니다.");
         }
     }
+
+    // 사용자 정보 조회 (name, email만 반환)
+    public UserInfoDTO getUserInfo(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        UserInfoDTO userInfoDTO = new UserInfoDTO();
+        userInfoDTO.setName(user.getName());
+        userInfoDTO.setEmail(user.getEmail());
+
+        return userInfoDTO;
+    }
+
 }
