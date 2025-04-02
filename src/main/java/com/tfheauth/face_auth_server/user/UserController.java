@@ -1,5 +1,6 @@
 package com.tfheauth.face_auth_server.user;
 
+import jakarta.persistence.PreUpdate;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -27,5 +28,10 @@ public class UserController {
     @GetMapping("/main")
     public UserInfoDTO showUserInfo(@RequestParam Long id) {
         return userService.getUserInfo(id);
+    }
+
+    @PatchMapping("/name")
+    public UserNameDTO updateUserName(@RequestParam Long id, @RequestBody UserNameDTO userNameDTO) {
+        return userService.updateUserName(id, userNameDTO);
     }
 }

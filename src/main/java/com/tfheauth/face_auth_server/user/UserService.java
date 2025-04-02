@@ -40,13 +40,24 @@ public class UserService {
     // 사용자 정보 조회 (name, email만 반환)
     public UserInfoDTO getUserInfo(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다"));
 
         UserInfoDTO userInfoDTO = new UserInfoDTO();
         userInfoDTO.setName(user.getName());
         userInfoDTO.setEmail(user.getEmail());
 
         return userInfoDTO;
+    }
+
+    //사용자 이름 수정
+    public UserNameDTO updateUserName(Long id, UserNameDTO userNameUpdateDTO) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다"));
+
+        user.setName(userNameUpdateDTO.getName());
+        userRepository.save(user);
+
+        return userNameUpdateDTO;
     }
 
 }
