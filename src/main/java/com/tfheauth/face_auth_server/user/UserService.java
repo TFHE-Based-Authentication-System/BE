@@ -15,49 +15,49 @@ public class UserService {
     }
 
     // 회원가입
-    public void join(UserDTO userDTO) {
-        if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
+    public void join(UserRequestDTO userRequestDTO) {
+        if (userRepository.findByEmail(userRequestDTO.getEmail()).isPresent()) {
             throw new RuntimeException("이미 가입된 이메일입니다.");
         }
 
         User user = new User();
-        user.setEmail(userDTO.getEmail());
-        user.setName(userDTO.getName());
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        user.setEmail(userRequestDTO.getEmail());
+        user.setName(userRequestDTO.getName());
+        user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
         userRepository.save(user);
     }
 
     // 로그인
-    public void login(String email, String password) {
-        User user = userRepository.findByEmail(email)
+    public void login(UserRequestDTO userRequestDTO) {
+        User user = userRepository.findByEmail(userRequestDTO.getEmail())
                 .orElseThrow(() -> new RuntimeException("이메일 또는 비밀번호가 잘못되었습니다."));
 
-        if (!passwordEncoder.matches(password, user.getPassword())) {
+        if (!passwordEncoder.matches(userRequestDTO.getPassword(), user.getPassword())) {
             throw new RuntimeException("이메일 또는 비밀번호가 잘못되었습니다.");
         }
     }
 
     // 사용자 정보 조회 (name, email만 반환)
-    public UserInfoDTO getUserInfo(Long id) {
+    public UserResponseDTO getUserInfo(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다"));
 
-        UserInfoDTO userInfoDTO = new UserInfoDTO();
-        userInfoDTO.setName(user.getName());
-        userInfoDTO.setEmail(user.getEmail());
+        UserResponseDTO userDTO = new UserResponseDTO();
+        userDTO.setName(user.getName());
+        userDTO.setEmail(user.getEmail());
 
-        return userInfoDTO;
+        return userDTO;
     }
 
     //사용자 이름 수정
-    public UserNameDTO updateUserName(Long id, UserNameDTO userNameUpdateDTO) {
+    public UserResponseDTO updateUserName(Long id, UserResponseDTO userResponseDTO) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다"));
 
-        user.setName(userNameUpdateDTO.getName());
+        user.setName(userResponseDTO.getName());
         userRepository.save(user);
 
-        return userNameUpdateDTO;
+        return userResponseDTO;
     }
 
 }

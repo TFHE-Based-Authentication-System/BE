@@ -1,6 +1,7 @@
 package com.tfheauth.face_auth_server.user;
 
-import jakarta.persistence.PreUpdate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,24 +15,24 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public String joinUser(@RequestBody UserDTO userDTO) {
-        userService.join(userDTO);
-        return "회원가입이 완료되었습니다.";
+    public ResponseEntity<String> joinUser(@RequestBody UserRequestDTO userRequestDTO) {
+        userService.join(userRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body("회원가입이 완료되었습니다.");
     }
 
     @PostMapping("/login")
-    public String loginUser(@RequestBody UserDTO userDTO) {
-        userService.login(userDTO.getEmail(), userDTO.getPassword());
-        return "로그인 성공";
+    public ResponseEntity<String> loginUser(@RequestBody UserRequestDTO userRequestDTO) {
+        userService.login(userRequestDTO);
+        return ResponseEntity.ok("로그인 성공");
     }
 
     @GetMapping("/main")
-    public UserInfoDTO showUserInfo(@RequestParam Long id) {
+    public UserResponseDTO showUserInfo(@RequestParam Long id) {
         return userService.getUserInfo(id);
     }
 
-    @PatchMapping("/name")
-    public UserNameDTO updateUserName(@RequestParam Long id, @RequestBody UserNameDTO userNameDTO) {
-        return userService.updateUserName(id, userNameDTO);
+    @PatchMapping("/update")
+    public UserResponseDTO updateUserName(@RequestParam Long id, @RequestBody UserResponseDTO userResponseDTO) {
+        return userService.updateUserName(id, userResponseDTO);
     }
 }
