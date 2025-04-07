@@ -2,14 +2,16 @@ package com.tfheauth.face_auth_server.feature;
 
 import com.tfheauth.face_auth_server.user.User;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Feature {
 
     @Id
@@ -21,9 +23,9 @@ public class Feature {
     private String vector;
 
     private LocalDateTime created_at = LocalDateTime.now();
-    private LocalDateTime updated_at = LocalDateTime.now();
+    private LocalDateTime updated_at;
 
     @OneToOne
-    @JoinColumn(name = "user_email", referencedColumnName = "email", unique = true)
+    @JoinColumn(name = "USER_EMAIL", referencedColumnName = "EMAIL", unique = true)
     private User user;
 }
