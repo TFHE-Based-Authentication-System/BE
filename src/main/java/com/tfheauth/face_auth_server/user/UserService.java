@@ -15,24 +15,24 @@ public class UserService {
     }
 
     // 회원가입
-    public void join(UserRequestDTO userRequestDTO) {
-        if (userRepository.findByEmail(userRequestDTO.getEmail()).isPresent()) {
+    public void join(SignupRequestDTO signupRequestDTO) {
+        if (userRepository.findByEmail(signupRequestDTO.getEmail()).isPresent()) {
             throw new RuntimeException("이미 가입된 이메일입니다.");
         }
 
         User user = new User();
-        user.setEmail(userRequestDTO.getEmail());
-        user.setName(userRequestDTO.getName());
-        user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
+        user.setEmail(signupRequestDTO.getEmail());
+        user.setName(signupRequestDTO.getName());
+        user.setPassword(passwordEncoder.encode(signupRequestDTO.getPassword()));
         userRepository.save(user);
     }
 
     // 로그인
-    public void login(UserRequestDTO userRequestDTO) {
-        User user = userRepository.findByEmail(userRequestDTO.getEmail())
+    public void login(LoginRequestDTO loginRequestDTO) {
+        User user = userRepository.findByEmail(loginRequestDTO.getEmail())
                 .orElseThrow(() -> new RuntimeException("이메일 또는 비밀번호가 잘못되었습니다."));
 
-        if (!passwordEncoder.matches(userRequestDTO.getPassword(), user.getPassword())) {
+        if (!passwordEncoder.matches(loginRequestDTO.getPassword(), user.getPassword())) {
             throw new RuntimeException("이메일 또는 비밀번호가 잘못되었습니다.");
         }
     }

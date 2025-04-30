@@ -15,14 +15,14 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> joinUser(@RequestBody UserRequestDTO userRequestDTO) {
-        userService.join(userRequestDTO);
+    public ResponseEntity<String> joinUser(@RequestBody SignupRequestDTO signupRequestDTO) {
+        userService.join(signupRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body("회원가입이 완료되었습니다.");
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody UserRequestDTO userRequestDTO) {
-        userService.login(userRequestDTO);
+    public ResponseEntity<String> loginUser(@RequestBody LoginRequestDTO loginRequestDTO) {
+        userService.login(loginRequestDTO);
         return ResponseEntity.ok("로그인 성공");
     }
 
