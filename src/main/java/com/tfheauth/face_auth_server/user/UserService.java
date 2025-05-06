@@ -28,13 +28,15 @@ public class UserService {
     }
 
     // 로그인
-    public void login(LoginRequestDTO loginRequestDTO) {
+    public User login(LoginRequestDTO loginRequestDTO) {
         User user = userRepository.findByEmail(loginRequestDTO.getEmail())
                 .orElseThrow(() -> new RuntimeException("이메일 또는 비밀번호가 잘못되었습니다."));
 
         if (!passwordEncoder.matches(loginRequestDTO.getPassword(), user.getPassword())) {
             throw new RuntimeException("이메일 또는 비밀번호가 잘못되었습니다.");
         }
+
+        return user;
     }
 
     // 사용자 정보 조회 (name, email만 반환)

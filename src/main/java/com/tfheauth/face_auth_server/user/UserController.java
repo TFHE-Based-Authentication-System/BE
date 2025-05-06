@@ -21,9 +21,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody LoginRequestDTO loginRequestDTO) {
-        userService.login(loginRequestDTO);
-        return ResponseEntity.ok("로그인 성공");
+    public ResponseEntity<LoginResponseDTO> loginUser(@RequestBody LoginRequestDTO loginRequestDTO) {
+        User user = userService.login(loginRequestDTO);
+        LoginResponseDTO response = new LoginResponseDTO(user.getId(), "로그인 성공");
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/main")
