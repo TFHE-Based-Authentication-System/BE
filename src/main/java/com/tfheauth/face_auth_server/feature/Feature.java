@@ -9,9 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class Feature {
 
     @Id
@@ -19,8 +17,9 @@ public class Feature {
     @Column(name = "FEATURE_ID")
     private Long id;
 
-    @Column(nullable = false)
-    private String vector;
+    @Convert(converter = VectorConverter.class)
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private Vector vector;
 
     private LocalDateTime created_at = LocalDateTime.now();
     private LocalDateTime updated_at;

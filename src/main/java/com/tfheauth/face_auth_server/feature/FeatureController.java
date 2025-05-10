@@ -13,10 +13,9 @@ public class FeatureController {
         this.featureService = featureService;
     }
 
-    @PostMapping("/{userId}")
-    public ResponseEntity<String> saveFeature(@PathVariable Long userId, @RequestBody FeatureRequestDTO featureRequestDTO) {
-        featureService.saveFeature(userId, featureRequestDTO);
+    @PostMapping
+    public ResponseEntity<String> saveFeature(@RequestBody FeatureRequestDTO featureRequestDTO) {
+        featureService.saveFeature(featureRequestDTO);
         return ResponseEntity.ok("Feature 저장 완료");
     }
-
 }
