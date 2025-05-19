@@ -1,6 +1,5 @@
 package com.tfheauth.face_auth_server.feature;
 
-import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,9 +7,9 @@ import java.util.List;
 
 @Getter
 @Setter
-@Embeddable
-public class Vector {
+public class FeatureCompareRequestDTO {
 
+    private String email;
     private List<Double> c1;
     private List<Double> c2;
     private List<Double> s;
