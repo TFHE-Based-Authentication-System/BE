@@ -43,7 +43,6 @@ public class FeatureService {
 
         List<Double> c1 = requestDTO.getC1();
         List<Double> c2 = requestDTO.getC2();
-        List<Double> s = requestDTO.getS();
 
         List<Double> db_c1 = stored.getC1();
         List<Double> db_c2 = stored.getC2();
