@@ -12,5 +12,4 @@ public class FeatureCompareRequestDTO {
     private String email;
     private List<Double> c1;
     private List<Double> c2;
-    private List<Double> s;
 }
