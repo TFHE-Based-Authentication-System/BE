@@ -10,6 +10,6 @@ import java.util.List;
 public class FeatureCompareRequestDTO {
 
     private String email;
-    private List<Double> c1;
-    private List<Double> c2;
+    private List<String> c1;
+    private List<String> c2;
 }

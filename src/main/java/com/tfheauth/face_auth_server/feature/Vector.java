@@ -11,6 +11,6 @@ import java.util.List;
 @Embeddable
 public class Vector {
 
-    private List<Double> c1;
-    private List<Double> c2;
+    private List<String> c1;
+    private List<String> c2;
 }

@@ -5,6 +5,7 @@ import com.tfheauth.face_auth_server.user.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,21 +42,21 @@ public class FeatureService {
 
         Vector stored = feature.getVector();
 
-        List<Double> c1 = requestDTO.getC1();
-        List<Double> c2 = requestDTO.getC2();
+        List<String> c1 = requestDTO.getC1();
+        List<String> c2 = requestDTO.getC2();
 
-        List<Double> db_c1 = stored.getC1();
-        List<Double> db_c2 = stored.getC2();
+        List<String> db_c1 = stored.getC1();
+        List<String> db_c2 = stored.getC2();
 
         List<PolynomialCoefficientDTO> result = new ArrayList<>();
 
         for (int i = 0; i < c1.size(); i++) {
-            double tildeC1 = c1.get(i) - db_c1.get(i);
-            double tildeC2 = c2.get(i) - db_c2.get(i);
+            BigInteger tildeC1 = new BigInteger(c1.get(i)).subtract(new BigInteger(db_c1.get(i)));
+            BigInteger tildeC2 = new BigInteger(c2.get(i)).subtract(new BigInteger(db_c2.get(i)));
 
-            double a = Math.pow(tildeC1, 2);
-            double b = 2 * tildeC1 * tildeC2;
-            double c = Math.pow(tildeC2, 2);
+            BigInteger a = tildeC2.pow(2); // s^2 계수
+            BigInteger b = tildeC1.multiply(tildeC2).multiply(BigInteger.TWO); // s 계수
+            BigInteger c = tildeC1.pow(2); // 상수항
 
             result.add(new PolynomialCoefficientDTO(a, b, c));
         }

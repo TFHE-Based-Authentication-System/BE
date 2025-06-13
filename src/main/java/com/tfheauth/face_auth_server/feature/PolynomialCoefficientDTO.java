@@ -4,11 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigInteger;
+
 @Getter
 @Setter
 @AllArgsConstructor
 public class PolynomialCoefficientDTO {
-    private double a; // 상수항
-    private double b; // 1차항
-    private double c; // 2차항
+    private BigInteger a; // 상수항
+    private BigInteger b; // 1차항
+    private BigInteger c; // 2차항
 }
