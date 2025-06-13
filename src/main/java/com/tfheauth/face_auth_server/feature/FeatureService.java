@@ -56,13 +56,17 @@ public class FeatureService {
             BigInteger tildeC1 = new BigInteger(c1.get(i)).subtract(new BigInteger(db_c1.get(i))).mod(Q);
             BigInteger tildeC2 = new BigInteger(c2.get(i)).subtract(new BigInteger(db_c2.get(i))).mod(Q);
 
-            BigInteger a = tildeC2.pow(2).mod(Q);  // s^2 계수
-            BigInteger b = tildeC1.multiply(tildeC2).multiply(BigInteger.TWO).mod(Q);  // s 계수
-            BigInteger c = tildeC1.pow(2).mod(Q);  // 상수항
+            BigInteger a = polyMulMod(tildeC2, tildeC2, Q); // s^2 계수
+            BigInteger b = polyMulMod(tildeC1, tildeC2, Q).multiply(BigInteger.TWO).mod(Q); // s 계수
+            BigInteger c = polyMulMod(tildeC1, tildeC1, Q); // 상수항
 
             result.add(new PolynomialCoefficientDTO(a, b, c));
         }
 
         return result;
+    }
+
+    private BigInteger polyMulMod(BigInteger a, BigInteger b, BigInteger q) {
+        return a.multiply(b).mod(q);
     }
 }
